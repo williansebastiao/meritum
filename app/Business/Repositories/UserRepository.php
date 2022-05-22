@@ -73,4 +73,13 @@ class UserRepository implements UserInterface
         ];
         return response()->json($arr, Response::HTTP_OK);
     }
+
+    /**
+     * @return object
+     */
+    public function logout(): object
+    {
+        auth()->logout(true);
+        return response()->json(['message' => 'Até mais :)', 'success' => true], Response::HTTP_OK);
+    }
 }

@@ -66,8 +66,12 @@ class AuthController extends Controller
 
     public function logout(): object
     {
-
+        try {
+            return $this->service->logout();
+        } catch (\Exception $e) {
+            Log::error(['message' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+            return response()->json(['message' => $e->getMessage(), 'success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
-
 
 }

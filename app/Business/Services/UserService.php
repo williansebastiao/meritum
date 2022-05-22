@@ -58,4 +58,12 @@ class UserService
         return $this->repository->me();
     }
 
+    /**
+     * @return object
+     */
+    public function logout(): object
+    {
+        return $this->repository->logout();
+    }
+
 }

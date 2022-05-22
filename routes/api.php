@@ -26,5 +26,6 @@ Route::group(['prefix' => 'authenticate'], function() {
 Route::group(['middleware' => 'jwt.verify'], function() {
     Route::group(['prefix' => 'user'], function() {
         Route::get('me', [\App\Http\Controllers\Api\AuthController::class, 'me']);
+        Route::post('logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
     });
 });
