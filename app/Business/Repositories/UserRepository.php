@@ -5,6 +5,7 @@ namespace App\Business\Repositories;
 
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserRepository implements UserInterface
@@ -30,10 +31,13 @@ class UserRepository implements UserInterface
      */
     public function register(Array $data): object
     {
+        DB::beginTransaction();
         $res = $this->model->create($data);
         if ($res) {
+            DB::commit();;
             return response()->json(['message' => 'Registro salvo', 'status' => true], Response::HTTP_CREATED);
         }
+        DB::rollBack();
         return response()->json(['message' => 'Erro ao salvar', 'status' => false], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
