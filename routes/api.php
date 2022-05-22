@@ -14,10 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'register'], function(){
+Route::group(['prefix' => 'register'], function() {
     Route::post('/', [\App\Http\Controllers\Api\AuthController::class, 'register']);
-    Route::group(['middleware' => 'jwt.verify'], function() {
-        Route::get('me', [\App\Http\Controllers\Api\UserController::class, 'me']);
-        Route::post('logout', [\App\Http\Controllers\Api\UserController::class, 'logout']);
-    });
+});
+
+Route::group(['prefix' => 'authenticate'], function() {
+    Route::post('/', [\App\Http\Controllers\Api\AuthController::class, 'authenticate']);
+});
+
+
+Route::group(['middleware' => 'jwt.verify'], function() {
+
 });

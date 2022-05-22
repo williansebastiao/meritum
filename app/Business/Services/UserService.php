@@ -41,4 +41,13 @@ class UserService
         return $this->repository->register($arr);
     }
 
+    /**
+     * @param array $data
+     * @return object
+     */
+    public function authenticate(Array $data): object
+    {
+        return $this->repository->authenticate($data);
+    }
+
 }

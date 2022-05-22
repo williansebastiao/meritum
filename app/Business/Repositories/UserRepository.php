@@ -36,4 +36,19 @@ class UserRepository implements UserInterface
         }
         return response()->json(['message' => 'Erro ao salvar', 'status' => false], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    public function authenticate(Array $data): object
+    {
+        if (!$token = auth()->attempt($data)) {
+            return response()->json(['message' => 'Erro ap autenticar', 'success' => false], Response::HTTP_UNPROCESSABLE_ENTITY);
+        } else {
+            $user = auth()->user();
+            return response()->json(
+                [
+                    'token' => $token,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name
+                ], Response::HTTP_OK);
+        }
+    }
 }

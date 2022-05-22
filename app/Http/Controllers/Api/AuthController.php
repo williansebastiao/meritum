@@ -40,9 +40,18 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param AuthRequest $request
+     * @return object
+     */
     public function authenticate(AuthRequest $request): object
     {
-
+        try {
+            return $this->service->authenticate($request->all());
+        } catch (\Exception $e) {
+            Log::error(['message' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+            return response()->json(['message' => $e->getMessage(), 'success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function me(): object
