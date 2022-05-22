@@ -77,7 +77,7 @@ Body:
 ```
 
 #### Me
-Endpoint: /me
+Endpoint: /user/me
 
 #### Logout
-Endpoint: /logout
+Endpoint: /user/logout
