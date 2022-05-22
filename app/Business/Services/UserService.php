@@ -50,4 +50,12 @@ class UserService
         return $this->repository->authenticate($data);
     }
 
+    /**
+     * @return object
+     */
+    public function me(): object
+    {
+        return $this->repository->me();
+    }
+
 }

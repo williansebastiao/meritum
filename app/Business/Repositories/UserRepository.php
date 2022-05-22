@@ -37,6 +37,10 @@ class UserRepository implements UserInterface
         return response()->json(['message' => 'Erro ao salvar', 'status' => false], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
+    /**
+     * @param array $data
+     * @return object
+     */
     public function authenticate(Array $data): object
     {
         if (!$token = auth()->attempt($data)) {
@@ -47,8 +51,26 @@ class UserRepository implements UserInterface
                 [
                     'token' => $token,
                     'first_name' => $user->first_name,
-                    'last_name' => $user->last_name
+                    'last_name' => $user->last_name,
+                    'success' => true
                 ], Response::HTTP_OK);
         }
+    }
+
+    /**
+     * @return object
+     */
+    public function me(): object
+    {
+        $user = auth()->user();
+        $arr = [
+            'id' => $user->id,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'cpf' => $user->cpf,
+        ];
+        return response()->json($arr, Response::HTTP_OK);
     }
 }

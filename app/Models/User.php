@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Business\Helpers\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,6 +38,22 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
+
+    /**
+     * @param $value
+     * @return false|string
+     */
+    public function getPhoneAttribute($value) {
+        return Str::mask('(##) #####-####', $value);
+    }
+
+    /**
+     * @param $value
+     * @return false|string
+     */
+    public function getCpfAttribute($value) {
+        return Str::mask('###.###.###-##', $value);
+    }
 
     /**
      * The attributes that should be cast.
