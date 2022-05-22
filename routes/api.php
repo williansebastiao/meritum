@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'register'], function() {
+    Route::post('/', [\App\Http\Controllers\Api\AuthController::class, 'register']);
+});
+
+Route::group(['prefix' => 'authenticate'], function() {
+    Route::post('/', [\App\Http\Controllers\Api\AuthController::class, 'authenticate']);
+});
+
+
+Route::group(['middleware' => 'jwt.verify'], function() {
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('me', [\App\Http\Controllers\Api\AuthController::class, 'me']);
+        Route::post('logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
+    });
 });
